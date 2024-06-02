@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductProxyService } from '../../services/product-proxy.service';
 import { IProductModelAngular } from '../../models/IProductModelAngular';
+import { CartProxyService } from '../../services/cart-proxy.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -14,7 +15,7 @@ import { IProductModelAngular } from '../../models/IProductModelAngular';
 export class ProductDetailComponent implements OnInit {
   product: IProductModelAngular | undefined;
 
-  constructor(private route: ActivatedRoute, private productService: ProductProxyService) { }
+  constructor(private cartService: CartProxyService, private route: ActivatedRoute, private productService: ProductProxyService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -25,5 +26,9 @@ export class ProductDetailComponent implements OnInit {
         });
       }
     });
+  }
+
+  addToCart(product: any): void {
+    this.cartService.addToCart(product);
   }
 }

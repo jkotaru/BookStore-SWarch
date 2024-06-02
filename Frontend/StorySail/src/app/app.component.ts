@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
 
   constructor(private userproxy: UserProxyService, private productproxy: ProductProxyService, private router: Router) {
   }
-  userId : any;
+
   genres: any = [];
 
   title(title: any) {
@@ -25,7 +25,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadCategories();
-    this.userId = "517f5dda-300f-4696-9ad6-7215f4f229af";
+    //this.userId = "517f5dda-300f-4696-9ad6-7215f4f229af";
   }
 
   loadCategories(): void {
@@ -41,6 +41,10 @@ export class AppComponent implements OnInit{
 
   get isLoggedIn(): boolean {
     return this.userproxy.user.logInStatus;
+  }
+
+  get userId():string {
+    return this.userproxy.user.userId;
   }
 
   onGenreChange(genre: string): void {

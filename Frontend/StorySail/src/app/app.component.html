@@ -3,7 +3,7 @@
     <div class="logo-slogan">
       <a routerLink="" routerLinkActive="active" class="icon-link">
         <img src="assets/logo.png" alt="Website Logo" class="logo"></a>
-      <span class="slogan">Your Slogan Here</span>
+      <span class="slogan">Discover New Worlds with StorySail</span>
     </div>
     <div class="auth-buttons" *ngIf="!isLoggedIn; else loggedIn">
       <a routerLink="/login" routerLinkActive="active" class="login-link">Login</a>
@@ -13,7 +13,6 @@
     </div>
     <ng-template #loggedIn>
       <div class="user-buttons">
-        {{userId}}
         <a [routerLink] = "['/profile/', userId ]" routerLinkActive="active" class="profile-link">Profile </a>
         <!-- <a href="/profile/{{userId}}" class="profile-link">Profile</a> -->
         <a routerLink="/cart" routerLinkActive="active" class="cart-link">
