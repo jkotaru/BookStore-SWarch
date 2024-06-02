@@ -38,15 +38,29 @@ class App {
             res.send("Mock data is added into db !");
         })
 
+        router.post("/login",(req,res) => {
+            
+            this.userModel.userLogin(req,res);
+        })
         
+        router.post("/register",(req,res) => {
+            
+            this.userModel.createUser(req,res);
+        })
+
+        router.get("/account/:userId", (req,res) => {
+            
+            this.userModel.showUserInfo(req,res);
+        })
+        
+        router.put("/account/update",(req,res) => {
+            
+            this.userModel.updateUserInfo(req,res);
+        })
+
         this.express.use(router);
     }
 }
 
 
 export { App };
-
-function next(err: any) {
-    throw new Error('Function not implemented.');
-}
-

@@ -67,6 +67,97 @@ class UserModel{
         return crypto.createHash('sha256').update(pwd).digest('base64').toString();
     }
     
+    public async createUser(request: any, response: any) {
+        const userData = request.body;
+        const existingUser = await this.model.findOne({ userId: userData.userId });
+
+        if (existingUser) {
+            return response.status(400).json({ message: "User already exists" });
+        }
+
+        const userId = uuid.v4();
+        const hashedPwd = this.hashPW(userData.password);
+        const newUser = new this.model({
+            userId: userId,
+            userName: userData.userName,
+            hashed_pwd: hashedPwd,
+            password: userData.password,
+            logInStatus: false,
+            isAdmin: false,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            phoneNumber: userData.phoneNumber,
+            address: userData.address
+        });
+        newUser.save();
+        response.status(200).json({message: "User data added to database!"});
+    }
+
+    public userLogin(request: any, response: any){
+        let userName, password;
+        userName = request.body.userName;
+        password = request.body.password;
+        //console.log(password);
+        var query = this.model.findOne({ userName: userName });
+        query.exec((err, user) => {
+            if (err) {
+                console.error("Error while retrieving user with the given User Name:", err);
+                response.status(500).json({ error: "An error occurred while retrieving user with the given User Name" });
+            } else {
+                if (user && this.hashPW(password) === user.hashed_pwd) {
+                    request.session.user = user.userId
+                    request.session.username = user.userName;
+                    response.status(200).json({ message: "Login successful"});
+                } else {
+                    response.status(401).json({ message: "Incorrect userName/password"});
+                }
+            }
+        });
+    }
+
+    public showUserInfo(request: any, response: any){
+        //let userId = request.body.userId;
+        let userId = request.params.userId;
+        var query = this.model.findOne({ userId: userId })
+        query.exec(( err, user) => {
+            if (err){
+                console.log("Error retrieving the requested user info...")
+                response.status(500).json("An error occurred while retrieving user with the given id")
+            }
+            else{ 
+                response.status(200).json(user)  
+            }         
+        })
+    }
+
+    public updateUserInfo(request: any, response: any){
+        //console.log(request.body);
+        let userId = request.body.userId;
+        var query = this.model.findOne({ userId: userId})
+        query.exec(( err, user) => {
+            if (err){
+                console.log("Error retrieving the requested user info...")
+                response.status(500).json("An error occurred while retrieving user with the given id")
+            }
+            else{
+                user.userName = request.body.userName,
+                user.hashed_pwd = this.hashPW(request.body.password),
+                user.password = request.body.password,
+                user.logInStatus = user.logInStatus,
+                user.isAdmin = user.isAdmin,
+                user.firstName = request.body.firstName,
+                user.lastName = request.body.lastName,
+                user.email = request.body.email,
+                user.phoneNumber = request.body.phoneNumber,
+                user.address = request.body.address,
+                user.zipcode = request.body.zipcode
+                             
+                user.save()  
+                response.status(200).json("User Info has been updated!")  
+            }         
+        })
+    }
     
 }
 
