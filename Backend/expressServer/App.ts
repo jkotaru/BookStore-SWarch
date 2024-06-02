@@ -1,14 +1,20 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
+import { UserModel } from '../model/UserModel';
+import { ProductModel } from '../model/ProductModel';
 
 class App {
     public express: express.Application;
+    private userModel: UserModel;
+    private productModel: ProductModel;
 
     constructor(){
         this.express = express();
         this.middleware();
         this.routes();
+        this.userModel = new UserModel();
+        this.productModel = new ProductModel();
     }
 
     private middleware(): void{
@@ -25,6 +31,12 @@ class App {
         router.get('/', (req, res) => {
             res.json('Send user details to the frontend as JSON');
         });
+
+        router.post('/',(req, res)=>{ 
+            this.userModel.addMockUsers();
+            this.productModel.addMockData();
+            res.send("Mock data is added into db !");
+        })
 
         
         this.express.use(router);

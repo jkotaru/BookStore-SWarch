@@ -1,7 +1,10 @@
 import * as cors from 'cors';
 import { App } from './App';
+import * as dotenv from 'dotenv';
 
-const port = 8080;
+dotenv.config();
+
+const port = process.env.PORT;
 let server: any = new App().express;
 server.use(cors({origin : "*"}));
 server.listen(port);
