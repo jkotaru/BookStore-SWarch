@@ -3,12 +3,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserProxyService } from '../../services/user-proxy.service';
 import { IUserModelAngular } from '../../models/IUserModelAngular';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })

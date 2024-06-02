@@ -94,7 +94,7 @@ class UserModel{
         response.status(200).json({message: "User data added to database!"});
     }
 
-    public userLogin(request: any, response: any){
+    public userLogin(request: any, response: any, callback: (userId: string) => void){
         let userName, password;
         userName = request.body.userName;
         password = request.body.password;
@@ -106,8 +106,11 @@ class UserModel{
                 response.status(500).json({ error: "An error occurred while retrieving user with the given User Name" });
             } else {
                 if (user && this.hashPW(password) === user.hashed_pwd) {
-                    // request.session.user = user.userId
-                    // request.session.username = user.userName;
+                    request.session.user = {
+                        userId: user.userId
+                    }
+                    //request.session.username = user.userName;
+                    callback(user.userId);
                     response.status(200).json({ message: "Login successful", userId: user.userId});
                 } else {
                     response.status(401).json({ message: "Incorrect userName/password"});
@@ -157,6 +160,10 @@ class UserModel{
                 response.status(200).json("User Info has been updated!")  
             }         
         })
+    }
+
+    public async retrieveUserbyName(userName){
+        this.model.findOne({ userName: userName });
     }
     
 }

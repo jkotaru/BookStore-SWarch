@@ -3,11 +3,15 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { UserModel } from '../model/UserModel';
 import { ProductModel } from '../model/ProductModel';
+const passport = require('passport');
+const session = require('express-session');
+const LocalStrategy = require('passport-local').Strategy;
 
 class App {
     public express: express.Application;
     private userModel: UserModel;
     private productModel: ProductModel;
+    static userCheck: string;
 
     constructor(){
         this.express = express();
@@ -21,6 +25,26 @@ class App {
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false}));
         this.express.use(cors());
+        this.express.use(session({
+            secret: "secret",
+            resave: false ,
+            saveUninitialized: true ,
+        }));
+        this.express.use(passport.initialize());
+        this.express.use(passport.session());
+    }
+
+    private validateAuth(req, res, next):void {
+        let userId = req.params.userId;
+        // console.log('userId: ',userId);
+        // console.log('check: ',App.userCheck);
+        if (userId == App.userCheck) { 
+          console.log("user is authenticated"); 
+          //console.log(JSON.stringify(req.user));
+          return next(); }
+        console.log("user is not authenticated");
+        // res.redirect('http://localhost:4200/');
+        res.status(403).send('Access Denied');
     }
 
 
@@ -39,16 +63,24 @@ class App {
         })
 
         router.post("/login",(req,res) => {
-            
-            this.userModel.userLogin(req,res);
-        })
+
+            this.userModel.userLogin(req, res, (userId: string) => {
+                App.userCheck = userId;
+            });
+        });
         
         router.post("/register",(req,res) => {
             
             this.userModel.createUser(req,res);
         })
 
-        router.get("/account/:userId", (req,res) => {
+        router.post("/logout",(req,res) =>{
+
+            App.userCheck = '';
+            res.status(200).json({'message': 'user successfully logged out', userId: App.userCheck});
+        })
+
+        router.get("/account/:userId", this.validateAuth, (req,res) => {
             
             this.userModel.showUserInfo(req,res);
         })

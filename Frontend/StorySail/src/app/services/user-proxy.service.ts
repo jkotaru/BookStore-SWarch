@@ -39,4 +39,8 @@ export class UserProxyService {
   updateUserInfo(user: IUserModelAngular): Observable<IUserModelAngular> {
     return this.http.put<IUserModelAngular>(this.apiUrl + '/account/update', user);
   }
+
+  logoutUser(): Observable<any> {
+    return this.http.post<IUserModelAngular>(this.apiUrl + '/logout', null);
+  }
 }

@@ -5,6 +5,7 @@ import { IUserModelAngular } from '../../models/IUserModelAngular';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
@@ -18,15 +19,27 @@ export class ProfileComponent implements OnInit {
   editMode: boolean = false;
   showPassword: boolean = false;
 
-  constructor(private route: ActivatedRoute, private userService: UserProxyService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private userproxy: UserProxyService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const userId = params.get('userId');
       if (userId) {
-        this.userService.getUserProfile(userId).subscribe(user => {
-          this.user = user;
-        });}
+        this.userproxy.getUserProfile(userId).subscribe(
+          (user) => {
+            console.log(user);
+            this.user = user;
+          },
+          (error: HttpErrorResponse) => {
+            if (error.status === 403) {
+              console.error('Access Denied: ', error.message);
+              this.router.navigate(['']);
+            } else {
+              console.error('Error fetching user profile: ', error.message);
+            }
+          }
+        );
+      }
       })
   }
 
@@ -39,12 +52,23 @@ export class ProfileComponent implements OnInit {
   }
 
   logout(): void {
-    this.userService.user.logInStatus = false;
-    this.router.navigate(['/']);
+    this.userproxy.logoutUser().subscribe(
+      (response: any) => {
+        if(response.message === "user successfully logged out"){
+          this.userproxy.user.userId = response.userId;
+          this.userproxy.user.logInStatus = false;
+          //console.log(this.userproxy.user.logInStatus);
+          this.router.navigate(['']);
+        }
+        (error: any) => {
+          // Handle error response
+          console.error('Error while logging in:', error);
+        }
+      })
   }
 
   updateUserDetails(): void {
-    this.userService.updateUserInfo(this.user).subscribe(
+    this.userproxy.updateUserInfo(this.user).subscribe(
       (updatedUser: IUserModelAngular) => {
         console.log('User details updated successfully:', updatedUser);
         this.editMode = false;

@@ -3,12 +3,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserProxyService } from '../../services/user-proxy.service';
 import { IUserModelAngular } from '../../models/IUserModelAngular';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink, RouterLinkActive],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -30,10 +30,9 @@ export class LoginComponent {
             // Handle successful login response
             if(response.message === "Login successful"){
               this.userproxy.user.userId = response.userId;
-              console.log(this.userproxy.user.userId);
               this.userproxy.user.logInStatus = true;
               //console.log(this.userproxy.user.logInStatus);
-              this.router.navigate(['/']);
+              this.router.navigate(['']);
             }
             //console.log(response);
             // Redirect user to dashboard or perform other actions

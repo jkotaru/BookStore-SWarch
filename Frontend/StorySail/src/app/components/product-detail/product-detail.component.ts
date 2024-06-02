@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductProxyService } from '../../services/product-proxy.service';
 import { IProductModelAngular } from '../../models/IProductModelAngular';
 import { CartProxyService } from '../../services/cart-proxy.service';
+import { UserProxyService } from '../../services/user-proxy.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,7 +16,7 @@ import { CartProxyService } from '../../services/cart-proxy.service';
 export class ProductDetailComponent implements OnInit {
   product: IProductModelAngular | undefined;
 
-  constructor(private cartService: CartProxyService, private route: ActivatedRoute, private productService: ProductProxyService) { }
+  constructor(private cartService: CartProxyService, private route: ActivatedRoute, private productService: ProductProxyService, private userproxy: UserProxyService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -30,5 +31,9 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(product: any): void {
     this.cartService.addToCart(product);
+  }
+
+  get isLoggedIn(): boolean {
+    return this.userproxy.user.logInStatus;
   }
 }
