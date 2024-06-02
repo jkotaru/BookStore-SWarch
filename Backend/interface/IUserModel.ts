@@ -11,6 +11,7 @@ interface IUserModel extends Mongoose.Document {
     email: string;
     phoneNumber: string;
     address: string;
+    role: 'admin' | 'user';
 }
 
 export { IUserModel };

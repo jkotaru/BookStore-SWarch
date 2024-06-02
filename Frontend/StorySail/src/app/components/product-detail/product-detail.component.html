@@ -1,6 +1,10 @@
 <div *ngIf="product" class="product-detail">
+<ng-container *ngIf="!editMode; else editModeTemplate">
   <img [src]="product.imageUrl" alt="{{ product.title }}">
   <h1>{{ product.title }}</h1>
+
+  <button *ngIf="isAdmin" (click)="toggleEditMode()">Edit Details</button>
+
   <p class="description"><strong>Description:</strong> {{ product.description }}</p>
   <p class="price"><strong>Price:</strong> {{ product.price | currency }}</p>
   <p class="genre"><strong>Genre:</strong> {{ product.genre }}</p>
@@ -8,4 +12,20 @@
   <p class="publisher"><strong>Published by:</strong> {{ product.publisher }}</p>
   <p class="publication-date"><strong>Publication Date:</strong> {{ product.publicationDate }}</p>
   <button *ngIf="isLoggedIn" (click)="addToCart(product)">Add to Cart</button>
+</ng-container>
+<ng-template #editModeTemplate>
+  <img [src]="product.imageUrl" alt="{{ product.title }}">
+  <p class="imageUrl"><strong>Url:</strong> <input type="text" [(ngModel)]="product.imageUrl"></p>
+  <h1><input type="text" [(ngModel)]="product.title"></h1>
+  <p class="description"><strong>Description:</strong> <input type="text" [(ngModel)]="product.description"></p>
+  <p class="price"><strong>Price:</strong> <input type="number" [(ngModel)]="product.price"></p>
+  <p class="genre"><strong>Genre:</strong> <input type="text" [(ngModel)]="product.genre"></p>
+  <p class="author"><strong>Author:</strong> <input type="text" [(ngModel)]="product.author"></p>
+  <p class="publisher"><strong>Published by:</strong> <input type="text" [(ngModel)]="product.publisher"></p>
+  <p class="publication-date"><strong>Publication Date:</strong> <input type="date" [(ngModel)]="product.publicationDate"></p>
+  <div class="product-buttons">
+    <button class="primary" (click)="updateProductDetails()">Confirm</button>
+    <button class="secondary" (click)="toggleEditMode()">Cancel</button>
+  </div>
+</ng-template>
 </div>

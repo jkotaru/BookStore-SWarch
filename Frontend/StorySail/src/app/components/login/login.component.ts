@@ -31,6 +31,7 @@ export class LoginComponent {
             if(response.message === "Login successful"){
               this.userproxy.user.userId = response.userId;
               this.userproxy.user.logInStatus = true;
+              this.userproxy.user.role = response.role;
               //console.log(this.userproxy.user.logInStatus);
               this.router.navigate(['']);
             }

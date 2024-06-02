@@ -1,1 +1,31 @@
-<p>admin works!</p>
+<div>
+    <h2>Admin Dashboard</h2>
+  
+    <!-- Button to add new product -->
+    <button (click)="addProduct()">Add Product</button>
+  
+    <!-- Table to display products -->
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.title }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>
+            <!-- Buttons for CRUD operations -->
+            <button (click)="editProduct(product)">Edit</button>
+            <button (click)="deleteProduct(product)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

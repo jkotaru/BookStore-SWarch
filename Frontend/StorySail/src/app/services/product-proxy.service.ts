@@ -27,5 +27,9 @@ export class ProductProxyService {
     return this.http.get<IProductModelAngular[]>(`${this.apiUrl}/category/${genre}`);
   }
 
+  updateProductInfo(product: IProductModelAngular): Observable<IProductModelAngular> {
+    return this.http.put<IProductModelAngular>(this.apiUrl + '/update', product);
+  }
+
 
 }

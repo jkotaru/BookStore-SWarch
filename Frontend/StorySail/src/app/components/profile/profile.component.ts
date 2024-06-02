@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserProxyService } from '../../services/user-proxy.service';
 import { IUserModelAngular } from '../../models/IUserModelAngular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
           (error: HttpErrorResponse) => {
             if (error.status === 403) {
               console.error('Access Denied: ', error.message);
-              this.router.navigate(['']);
+              this.router.navigate(['/login']);
             } else {
               console.error('Error fetching user profile: ', error.message);
             }
@@ -41,6 +41,10 @@ export class ProfileComponent implements OnInit {
         );
       }
       })
+  }
+
+  get isAdmin(): boolean {
+    return this.user.role == 'admin';
   }
 
   togglePasswordVisibility() {
@@ -57,6 +61,7 @@ export class ProfileComponent implements OnInit {
         if(response.message === "user successfully logged out"){
           this.userproxy.user.userId = response.userId;
           this.userproxy.user.logInStatus = false;
+          this.userproxy.user.role = '';
           //console.log(this.userproxy.user.logInStatus);
           this.router.navigate(['']);
         }

@@ -25,7 +25,11 @@ export class RegisterComponent {
   onSubmit() {
     if (this.registerForm.valid) {
       this.userData = this.registerForm.value;
-      console.log(this.userData);
+      if(this.userData.role == undefined)
+        {
+          this.userData.role = 'user';
+        }
+      //console.log(this.userData);
       this.userproxy.userRegister(this.userData).subscribe(
           (response: any) => {
             if(response.message === "User data added to database!"){

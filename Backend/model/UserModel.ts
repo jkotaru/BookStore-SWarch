@@ -49,7 +49,8 @@ class UserModel{
                         message: "Phone number must be exactly 10 digits"
                     }
                 },
-                address: {type: String, required: false} 
+                address: {type: String, required: false} ,
+                role: { type: String, enum: ['admin', 'user'], required: true }
             }
         )
     }
@@ -88,7 +89,8 @@ class UserModel{
             lastName: userData.lastName,
             email: userData.email,
             phoneNumber: userData.phoneNumber,
-            address: userData.address
+            address: userData.address,
+            role: userData.role
         });
         newUser.save();
         response.status(200).json({message: "User data added to database!"});
@@ -111,7 +113,7 @@ class UserModel{
                     }
                     //request.session.username = user.userName;
                     callback(user.userId);
-                    response.status(200).json({ message: "Login successful", userId: user.userId});
+                    response.status(200).json({ message: "Login successful", userId: user.userId, role: user.role});
                 } else {
                     response.status(401).json({ message: "Incorrect userName/password"});
                 }
@@ -154,7 +156,7 @@ class UserModel{
                 user.email = request.body.email,
                 user.phoneNumber = request.body.phoneNumber,
                 user.address = request.body.address,
-                user.zipcode = request.body.zipcode
+                user.role = user.role
                              
                 user.save()  
                 response.status(200).json("User Info has been updated!")  

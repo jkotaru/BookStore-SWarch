@@ -19,7 +19,8 @@ export class UserProxyService {
     lastName: '',
     email: '',
     phoneNumber: '',
-    address: ''
+    address: '',
+    role: ''
   };
 
   constructor(private http: HttpClient) { }

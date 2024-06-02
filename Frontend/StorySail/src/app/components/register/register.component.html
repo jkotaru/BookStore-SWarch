@@ -38,6 +38,13 @@
                         <label for="address">Address:</label>
                         <textarea id="address" name="address" [(ngModel)]="formData.address"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="role">User Role:</label>
+                        <select id="role" name="role" [(ngModel)]="formData.role">
+                            <option value="user" selected>User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="form-group text-center">
@@ -49,5 +56,5 @@
             </div>
         </form>
     </div>
-    </body>
+</body>
     

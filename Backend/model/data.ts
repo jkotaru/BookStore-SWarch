@@ -1803,7 +1803,8 @@ const users =[
     lastName: "Scott",
     email: "mikescott@gmail.com",
     phoneNumber: "4254280162",
-    address: "901 12th Avenue, 98122"
+    address: "901 12th Avenue, 98122",
+    role: "user"
   },
   {
     userId: uuid.v4(),
@@ -1816,7 +1817,8 @@ const users =[
     lastName: "Clark",
     email: "rclark@yahoo.com",
     phoneNumber: "2065463721",
-    address: "901 12th Avenue, 98122"
+    address: "901 12th Avenue, 98122",
+    role: "admin"
   }
 ]
 

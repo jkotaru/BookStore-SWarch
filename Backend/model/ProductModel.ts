@@ -145,6 +145,32 @@ class ProductModel {
             res.status(500).json({ message: err.message });
         }
     }
+
+    public updateProductInfo(request: any, response: any){
+      //console.log(request.body);
+      let productId = request.body.productId;
+      var query = this.model.findOne({ productId: productId})
+      query.exec(( err, product) => {
+          if (err){
+              console.log("Error retrieving the requested product info...")
+              response.status(500).json("An error occurred while retrieving prduct with the given id")
+          }
+          else{
+              product.title = request.body.title,
+              product.description = request.body.description,
+              product.author = request.body.author,
+              product.price = request.body.price,
+              product.quantity = request.body.quantity,
+              product.imageUrl = request.body.imageUrl,
+              product.publisher = request.body.publisher,
+              product.publicationDate = request.body.publicationDate,
+              product.genre = request.body.genre
+                           
+              product.save()  
+              response.status(200).json("Product Info has been updated!")  
+          }         
+      })
+  }
     
 }
 

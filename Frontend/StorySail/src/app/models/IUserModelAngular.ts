@@ -9,4 +9,5 @@ export interface IUserModelAngular {
     email: string;
     phoneNumber: string;
     address: string;
+    role: String;
 }

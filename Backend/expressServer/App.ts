@@ -95,6 +95,11 @@ class App {
             this.productModel.getProducts(req, res);
         })
 
+        router.put("/products/update",(req,res) => {
+            
+            this.productModel.updateProductInfo(req,res);
+        })
+
         router.get("/products/category",(req,res) => {
             
             this.productModel.getProductCategories(req,res);
