@@ -106,9 +106,9 @@ class UserModel{
                 response.status(500).json({ error: "An error occurred while retrieving user with the given User Name" });
             } else {
                 if (user && this.hashPW(password) === user.hashed_pwd) {
-                    request.session.user = user.userId
-                    request.session.username = user.userName;
-                    response.status(200).json({ message: "Login successful"});
+                    // request.session.user = user.userId
+                    // request.session.username = user.userName;
+                    response.status(200).json({ message: "Login successful", userId: user.userId});
                 } else {
                     response.status(401).json({ message: "Incorrect userName/password"});
                 }

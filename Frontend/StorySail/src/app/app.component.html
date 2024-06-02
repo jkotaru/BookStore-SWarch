@@ -1,0 +1,41 @@
+<nav class="navbar">
+  <div class="navbar-top">
+    <div class="logo-slogan">
+      <a routerLink="" routerLinkActive="active" class="icon-link">
+        <img src="assets/logo.png" alt="Website Logo" class="logo"></a>
+      <span class="slogan">Your Slogan Here</span>
+    </div>
+    <div class="auth-buttons" *ngIf="!isLoggedIn; else loggedIn">
+      <a routerLink="/login" routerLinkActive="active" class="login-link">Login</a>
+      <!-- <a href = "/login" class="login-link">Login</a> -->
+      <a routerLink="/register" routerLinkActive="active" class="register-link">Register</a>
+      <!-- <a href="/register" class="register-link">Register</a> -->
+    </div>
+    <ng-template #loggedIn>
+      <div class="user-buttons">
+        {{userId}}
+        <a [routerLink] = "['/profile/', userId ]" routerLinkActive="active" class="profile-link">Profile </a>
+        <!-- <a href="/profile/{{userId}}" class="profile-link">Profile</a> -->
+        <a routerLink="/cart" routerLinkActive="active" class="cart-link">
+        <!-- <a href="/cart" class="cart-link"> -->
+          <i class="fas fa-shopping-cart"> Cart </i>
+        </a>
+      </div>
+    </ng-template>
+  </div>
+  <div class="navbar-bottom">
+    <div class="genre-dropdown">
+      <button class="dropdown-btn">Genres</button>
+      <div class="dropdown-content">
+        <a *ngFor="let genre of genres" [routerLink]="['/products/category/', genre]" routerLinkActive="active">{{ genre }}</a>
+      </div>
+    </div>
+    <input type="text" class="search-bar" placeholder="Search...">
+  </div>
+</nav>
+
+<footer>
+  <p>&copy; 2024 Your Company. All rights reserved.</p>
+</footer>
+
+<router-outlet></router-outlet>

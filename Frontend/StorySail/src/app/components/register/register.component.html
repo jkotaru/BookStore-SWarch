@@ -1,0 +1,53 @@
+<body>
+    <div class="register-container" [ngClass]="{ 'expanded': isExpanded }">
+            <h2>Register</h2>
+        <form (ngSubmit)="onSubmit()" #registerForm="ngForm">
+            <div *ngIf="errorResponse" class="error-message">
+                {{ errorResponse }}
+            </div>
+            <div class="form-group">
+                <label for="userName">Username:</label>
+                <input type="text" id="userName" name="userName" required [(ngModel)]="formData.userName" #username="ngModel">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required [(ngModel)]="formData.password" #password="ngModel">
+            </div>
+            <div class="expandable" id="expandableSection">
+                <button type="button" class="expand-button" (click)="toggleExpand()">
+                    {{ isExpanded ? '▲' : '▼' }}
+                </button>
+                <div class="expanded-content" id="expandedContent" [ngClass]="{ 'expanded': isExpanded }">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" [(ngModel)]="formData.email" #email="ngModel">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" [(ngModel)]="formData.firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" [(ngModel)]="formData.lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" name="phoneNumber" [(ngModel)]="formData.phoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" [(ngModel)]="formData.address"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <br>
+                <button type="submit" [disabled]="registerForm.invalid">Register</button>
+            </div>
+            <div class="already-have-account">
+                <a routerLink="/login">Already have an account?</a>
+            </div>
+        </form>
+    </div>
+    </body>
+    

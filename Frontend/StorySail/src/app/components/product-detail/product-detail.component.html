@@ -1,0 +1,10 @@
+<div *ngIf="product" class="product-detail">
+  <img [src]="product.imageUrl" alt="{{ product.title }}">
+  <h1>{{ product.title }}</h1>
+  <p class="description"><strong>Description:</strong> {{ product.description }}</p>
+  <p class="price"><strong>Price:</strong> {{ product.price | currency }}</p>
+  <p class="genre"><strong>Genre:</strong> {{ product.genre }}</p>
+  <p class="author"><strong>Author:</strong> {{ product.author }}</p>
+  <p class="publisher"><strong>Published by:</strong> {{ product.publisher }}</p>
+  <p class="publication-date"><strong>Publication Date:</strong> {{ product.publicationDate }}</p>
+</div>

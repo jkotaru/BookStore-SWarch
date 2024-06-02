@@ -1,0 +1,119 @@
+/* app.component.css */
+.navbar {
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+.navbar-top, .navbar-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-slogan {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 10px;
+}
+
+.slogan {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+a {
+  display: inline-block;
+  padding: 10px 20px;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cart-link {
+  background-color: #2ebe20;
+}
+
+.profile-link {
+  background-color: #007bff;
+}
+
+.register-link {
+  background-color: #9e1a25;
+}
+
+.login-link {
+  background-color: #053f96;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+.navbar-top .auth-buttons, .navbar-top .user-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-top .auth-buttons {
+  margin-left: auto; /* Pushes the auth-buttons to the right */
+}
+
+.search-bar {
+  padding: 5px;
+  width: 200px;
+}
+
+footer {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.genre-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background-color: #f9f9f9;
+  color: #333;
+  padding: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.genre-dropdown:hover .dropdown-content {
+  display: block;
+}

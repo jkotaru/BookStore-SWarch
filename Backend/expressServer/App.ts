@@ -58,6 +58,27 @@ class App {
             this.userModel.updateUserInfo(req,res);
         })
 
+        router.get("/products",(req,res) => {
+
+            this.productModel.getProducts(req, res);
+        })
+
+        router.get("/products/category",(req,res) => {
+            
+            this.productModel.getProductCategories(req,res);
+        })
+
+        router.get("/products/category/:genre",(req,res) => {
+            
+            this.productModel.getProductsByCategory(req,res);
+        })
+
+        router.get("/products/:productId",(req,res) => {
+
+            this.productModel.getProductById(req, res);
+        })
+
+
         this.express.use(router);
     }
 }

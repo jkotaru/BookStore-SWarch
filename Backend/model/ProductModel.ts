@@ -40,6 +40,111 @@ class ProductModel {
     public addMockData(){
         this.model.insertMany(products);
     }
+
+    public async getProducts(req, res) {
+        try {
+          const products = await this.model.find();
+          res.status(200).json(products);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      };
+      
+      // Get product by ID
+      public async getProductById(req, res){
+        try {
+          const product = await this.model.findOne({ productId: req.params.productId });
+          if (product == null) {
+            return res.status(404).json({ message: 'Cannot find product' });
+          }
+          res.json(product);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      };
+      
+      // Create a new product
+      public async createProduct(req, res){
+        const product = new this.model({
+          picture: req.body.picture,
+          name: req.body.name,
+          price: req.body.price,
+          description: req.body.description,
+          quantity: req.body.quantity,
+        });
+      
+        try {
+          const newProduct = await product.save();
+          res.status(201).json(newProduct);
+        } catch (err) {
+          res.status(400).json({ message: err.message });
+        }
+      };
+      
+      // Update a product
+      public async updateProduct(req, res){
+        try {
+          const product = await this.model.findOne({ productId: req.params.productId });
+          if (product == null) {
+            return res.status(404).json({ message: 'Cannot find product' });
+          }
+      
+          if (req.body.picture != null) {
+            product.picture = req.body.picture;
+          }
+          if (req.body.name != null) {
+            product.name = req.body.name;
+          }
+          if (req.body.price != null) {
+            product.price = req.body.price;
+          }
+          if (req.body.description != null) {
+            product.description = req.body.description;
+          }
+          if (req.body.quantity != null) {
+            product.quantity = req.body.quantity;
+          }
+      
+          const updatedProduct = await product.save();
+          res.json(updatedProduct);
+        } catch (err) {
+          res.status(400).json({ message: err.message });
+        }
+      };
+      
+      // Delete a product
+      public async deleteProduct(req, res){
+        try {
+          const product = await this.model.findById(req.params.id);
+          if (product == null) {
+            return res.status(404).json({ message: 'Cannot find product' });
+          }
+      
+          await product.remove();
+          res.json({ message: 'Deleted Product' });
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      };
+
+      public async getProductCategories(req,res){
+        try {
+          const categories = await this.model.distinct('genre');
+          res.status(200).json(categories);
+        } catch (err) {
+          res.status(500).json({ message: err.message });
+        }
+      }
+
+      public async getProductsByCategory(req, res) {
+        try {
+            const genre = req.params.genre;
+            const products = await this.model.find({ genre });
+            res.status(200).json(products);
+        } catch (err) {
+            res.status(500).json({ message: err.message });
+        }
+    }
     
 }
 

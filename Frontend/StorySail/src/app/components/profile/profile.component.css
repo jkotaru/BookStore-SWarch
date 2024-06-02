@@ -1,0 +1,80 @@
+/* User Account Details Container */
+.user-account-container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* User Account Details Header */
+.user-account-header {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* User Account Details List */
+.user-account-list {
+  list-style: none;
+  padding: 0;
+}
+
+.user-account-list li {
+  margin-bottom: 10px;
+}
+
+/* Input Fields */
+.user-account-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Action Buttons */
+.user-account-buttons {
+  margin-top: 20px;
+}
+
+.user-account-buttons button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user-account-buttons button.primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.user-account-buttons button.secondary {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.password-toggle i {
+  font-size: 1rem;
+  line-height: 1;
+}
