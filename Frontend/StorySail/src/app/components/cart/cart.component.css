@@ -1,27 +1,41 @@
+/* shopping-cart.component.css */
+
+/* Container to center the cart */
 .cart-container {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  
-  .cart-items {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .cart-items li {
-    margin-bottom: 10px;
-  }
-  
-  button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
+  max-width: 600px; /* Adjust as needed */
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Rest of the styles remain the same */
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-item img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.cart-item-details {
+  flex: 1;
+}
+
+.remove-button {
+  background-color: #ff3333;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.total-section {
+  margin-top: 20px;
+  font-weight: bold;
+  font-size: 1.2em;
+}

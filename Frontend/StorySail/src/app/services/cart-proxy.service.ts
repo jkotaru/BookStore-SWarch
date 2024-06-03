@@ -1,38 +1,40 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { IProductModelAngular } from '../models/IProductModelAngular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartProxyService {
-  private items: any[] = [];
+  private cartItems: any[] = [];
+  private cartItemsSubject = new BehaviorSubject<any[]>([]);
 
   constructor() { }
 
-  // Add item to the cart
-  addToCart(product: any): void {
-    // Check if the item already exists in the cart
-    const itemIndex = this.items.findIndex(item => item.id === product.id);
-    if (itemIndex !== -1) {
-      // If item exists, increase the quantity
-      this.items[itemIndex].quantity += 1;
+  getCartItems() {
+    return this.cartItemsSubject.asObservable();
+  }
+
+  addToCart(item: IProductModelAngular) {
+    const existingItem = this.cartItems.find(i => i.productId === item.productId);
+    if (existingItem) {
+      existingItem.quantity++;
     } else {
-      // If item does not exist, add it to the cart with quantity 1
-      this.items.push({ ...product, quantity: 1 });
+      item.quantity = 1;
+      this.cartItems.push(item);
+    }
+    this.cartItemsSubject.next([...this.cartItems]);
+  }
+
+  removeFromCart(item: IProductModelAngular) {
+    const index = this.cartItems.findIndex(i => i.productId === item.productId);
+    if (index !== -1) {
+      this.cartItems.splice(index, 1);
+      this.cartItemsSubject.next([...this.cartItems]);
     }
   }
 
-  // Get all items from the cart
-  getItems(): any[] {
-    return this.items;
-  }
-
-  // Remove item from the cart by index
-  removeFromCart(index: number): void {
-    this.items.splice(index, 1);
-  }
-
-  // Clear the cart
-  clearCart(): void {
-    this.items = [];
+  getTotalPrice() {
+    return this.cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   }
 }

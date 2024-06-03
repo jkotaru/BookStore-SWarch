@@ -5,6 +5,8 @@
 
   <button *ngIf="isAdmin" (click)="toggleEditMode()">Edit Details</button>
 
+  <p *ngIf="isOutOfStock" style="color: red;"><strong>Out of Stock</strong></p>
+
   <p class="description"><strong>Description:</strong> {{ product.description }}</p>
   <p class="price"><strong>Price:</strong> {{ product.price | currency }}</p>
   <p class="genre"><strong>Genre:</strong> {{ product.genre }}</p>

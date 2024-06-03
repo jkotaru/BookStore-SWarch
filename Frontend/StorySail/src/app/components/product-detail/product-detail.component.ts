@@ -31,6 +31,10 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  get isOutOfStock():boolean{
+    return this.product.quantity == 0;
+  }
+
   addToCart(product: any): void {
     this.cartService.addToCart(product);
   }

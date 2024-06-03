@@ -1,16 +1,16 @@
-<div class="cart-container" *ngIf="cartItems.length > 0">
-    <h2>Your Cart</h2>
-    <ul class="cart-items">
-      <li *ngFor="let item of cartItems; let i = index">
-        <span>{{ item.name }}</span>
-        <span>Quantity: {{ item.quantity }}</span>
-        <span>Price: ${{ item.price }}</span>
-        <button (click)="removeFromCart(i)">Remove</button>
-      </li>
-    </ul>
-    <button (click)="clearCart()">Clear Cart</button>
+<div class="cart-container">
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <img [src]="item.imageUrl" alt="{{ item.title }}">
+    <div class="cart-item-details">
+      <div>{{ item.title }}</div>
+      <div>Quantity: <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item)" min="1"></div>
+      <div>Price: ${{ item.price | number: '1.2-2' }}</div>
+      <div>Total Price: ${{ (item.price * item.quantity) | number: '1.2-2' }}</div>
+    </div>
+    <button class="remove-button" (click)="removeFromCart(item)">Remove</button>
   </div>
-  <div *ngIf="cartItems.length === 0">
-    <p>Your cart is empty.</p>
-  </div>
-  
+
+  <div class="total-section">Total: ${{ totalPrice | number: '1.2-2' }}</div>
+
+  <!-- <button *ngIf="totalPrice > 0" class="checkout-button" (click)="checkout()">Checkout and Pay</button> -->
+</div>

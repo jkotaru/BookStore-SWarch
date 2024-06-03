@@ -1,31 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { CartProxyService } from '../../services/cart-proxy.service';
+import { ProductProxyService } from '../../services/product-proxy.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
+  totalPrice: number = 0;
 
   constructor(private cartService: CartProxyService) { }
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getItems();
+    this.cartService.getCartItems().subscribe(items => {
+      this.cartItems = items;
+      this.totalPrice = this.cartService.getTotalPrice();
+    });
   }
 
-  removeFromCart(index: number): void {
-    this.cartService.removeFromCart(index);
-    this.cartItems = this.cartService.getItems();
+  removeFromCart(item: any) {
+    this.cartService.removeFromCart(item);
   }
 
-  clearCart(): void {
-    this.cartService.clearCart();
-    this.cartItems = [];
+  updateQuantity(item: any) {
+    this.totalPrice = this.cartService.getTotalPrice();
   }
 }
