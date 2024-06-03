@@ -10,7 +10,8 @@
     <button class="remove-button" (click)="removeFromCart(item)">Remove</button>
   </div>
 
-  <div class="total-section">Total: ${{ totalPrice | number: '1.2-2' }}</div>
-
-  <!-- <button *ngIf="totalPrice > 0" class="checkout-button" (click)="checkout()">Checkout and Pay</button> -->
+  <div class="checkout-section">
+    <div class="total-section">Total: ${{ totalPrice | number: '1.2-2' }}</div>
+    <button *ngIf="totalPrice > 0" class="checkout-button" (click)="checkout()">Checkout and Pay</button>
+  </div>
 </div>

@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import { UserModel } from '../model/UserModel';
 import { ProductModel } from '../model/ProductModel';
+import { TransactionModel } from '../model/TransactionModel';
 const passport = require('passport');
 const session = require('express-session');
 const LocalStrategy = require('passport-local').Strategy;
@@ -11,6 +12,7 @@ class App {
     public express: express.Application;
     private userModel: UserModel;
     private productModel: ProductModel;
+    private transactionalModel: TransactionModel;
     static userCheck: string;
 
     constructor(){
@@ -19,6 +21,7 @@ class App {
         this.routes();
         this.userModel = new UserModel();
         this.productModel = new ProductModel();
+        this.transactionalModel = new TransactionModel();
     }
 
     private middleware(): void{
@@ -135,7 +138,18 @@ class App {
             this.productModel.updateProduct(req, res);
         })
 
+        router.get("/products/:productId/availability", (req, res) => {
+            
+            this.productModel.checkAvailability(req,res);
+        })
 
+        router.post("/transactions",(req,res) => {
+            this.transactionalModel.createTransaction(req,res);
+        })
+
+        router.put("/products/update/availability",(req,res) => {
+            this.productModel.updateAvailability(req,res);
+        })
         this.express.use(router);
     }
 }

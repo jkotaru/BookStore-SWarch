@@ -182,6 +182,41 @@ class ProductModel {
         res.status(500).json({ message: err.message });
       }
     }
+
+    public async checkAvailability(req,res) {
+      const productId = req.params.productId;
+      const requestedQuantity = parseInt(req.query.quantity);
+      const product = await this.model.findOne({ productId: productId });
+      const isAvailable = requestedQuantity <= product.quantity
+
+      res.status(200).json({available: isAvailable});
+    }
+
+    public async updateAvailability(req, res) {
+      try {
+        const transactionData = req.body;
+    
+        const items = transactionData.items.map((item) => ({
+          productId: item.productId,
+          quantity: item.quantity
+        }));
+    
+        for (const item of items) {
+          const product = await this.model.findOne({ productId: item.productId });
+          if (product) {
+            product.quantity -= item.quantity; // Reduce the available quantity
+            await product.save(); // Save the updated product
+          } else {
+            return res.status(404).json({ message: `Product with ID ${item.productId} not found` });
+          }
+        }
+    
+        return res.status(200).json({ message: 'Product availability updated successfully' });
+      } catch (error) {
+        console.error('Error updating product availability:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+    }
     
 }
 

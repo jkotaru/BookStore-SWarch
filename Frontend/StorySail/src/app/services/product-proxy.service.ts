@@ -47,4 +47,13 @@ export class ProductProxyService {
     return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
   }
 
+  checkProductAvailability(productId: string, quantity: number): Observable<{ available: boolean }> {
+    // Make an HTTP request to your backend API or database to check product availability
+    return this.http.get<{ available: boolean }>(`${this.apiUrl}/${productId}/availability?quantity=${quantity}`);
+  }
+
+  updateAvailability(transactionData: any): Observable<any>{
+    return this.http.put<any>(this.apiUrl + '/update/availability', transactionData);
+  }
+
 }

@@ -9,6 +9,11 @@
   border-radius: 5px;
 }
 
+.checkout-section {
+  display: flex;
+  justify-content: space-between; /* Items will be evenly distributed */
+}
+
 /* Rest of the styles remain the same */
 .cart-item {
   display: flex;
@@ -38,4 +43,18 @@
   margin-top: 20px;
   font-weight: bold;
   font-size: 1.2em;
+}
+
+.checkout-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
 }
