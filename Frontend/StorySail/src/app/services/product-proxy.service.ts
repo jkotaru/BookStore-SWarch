@@ -44,7 +44,7 @@ export class ProductProxyService {
   }
 
   updateProduct(product: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
+    return this.http.put<any>(`${this.apiUrl}/${product.productId}`, product);
   }
 
   checkProductAvailability(productId: string, quantity: number): Observable<{ available: boolean }> {

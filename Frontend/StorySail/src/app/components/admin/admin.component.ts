@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit {
   products!: any[];
   showForm: boolean = false;
   isEditing: boolean = false;
-  editingProductIndex: number = -1;
+  editingProductId: string = '';
   formData: any = {};
   productData!: IProductModelAngular ;
 
@@ -43,6 +43,7 @@ export class AdminComponent implements OnInit {
       this.productData = this.productForm.value;
       if (this.isEditing) {
         // Update existing product
+        this.productData.productId = this.editingProductId;
         this.productService.updateProduct(this.productData).subscribe(
           (response: any) => {
             if (response.message === "Product data updated!") {
@@ -78,6 +79,8 @@ export class AdminComponent implements OnInit {
     this.showForm = true;
     this.isEditing = true;
     this.formData = { ...product };
+    this.editingProductId = product.productId;
+
   }
 
   deleteProduct(product: any): void {
