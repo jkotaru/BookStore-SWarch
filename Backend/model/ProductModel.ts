@@ -174,7 +174,7 @@ class ProductModel {
       try
       {
         const query = req.query.query.toLowerCase();
-        console.log(query);
+        //console.log(query);
         const filteredProducts = await this.model.find({ title: { $regex: query, $options: 'i' } });
         res.status(200).json(filteredProducts);
       }

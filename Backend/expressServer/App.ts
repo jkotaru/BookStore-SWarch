@@ -97,7 +97,6 @@ class App {
 
         router.get("/search/products",(req,res) => {
 
-            console.log("entered search")
             this.productModel.filterProductsByTitle(req,res);
         })
 

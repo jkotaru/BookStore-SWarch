@@ -32,7 +32,7 @@ export class ProductProxyService {
   }
 
   searchProducts(query: string): Observable<any> {
-    return this.http.get(`http://localhost:5000/search/products/${query}`);
+    return this.http.get(`http://localhost:5000/search/products?query=${query}`);
   }
 
   deleteProduct(productId: string): Observable<void> {
