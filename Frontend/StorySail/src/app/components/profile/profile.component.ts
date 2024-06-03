@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
       if (userId) {
         this.userproxy.getUserProfile(userId).subscribe(
           (user) => {
-            console.log(user);
+            //console.log(user);
             this.user = user;
           },
           (error: HttpErrorResponse) => {

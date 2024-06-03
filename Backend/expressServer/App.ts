@@ -139,7 +139,7 @@ class App {
         })
 
         router.get("/products/:productId/availability", (req, res) => {
-            
+            console.log("checking availability of products");
             this.productModel.checkAvailability(req,res);
         })
 
@@ -148,6 +148,7 @@ class App {
         })
 
         router.put("/products/update/availability",(req,res) => {
+            console.log("updating the availability");
             this.productModel.updateAvailability(req,res);
         })
         this.express.use(router);
