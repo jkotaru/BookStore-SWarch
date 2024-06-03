@@ -95,6 +95,12 @@ class App {
             this.productModel.getProducts(req, res);
         })
 
+        router.get("/search/products",(req,res) => {
+
+            console.log("entered search")
+            this.productModel.filterProductsByTitle(req,res);
+        })
+
         router.put("/products/update",(req,res) => {
             
             this.productModel.updateProductInfo(req,res);
@@ -113,6 +119,21 @@ class App {
         router.get("/products/:productId",(req,res) => {
 
             this.productModel.getProductById(req, res);
+        })
+
+        router.delete("/products/:productId",(req,res) => {
+
+            this.productModel.deleteProduct(req, res);
+        })
+
+        router.post("/products",(req,res) => {
+
+            this.productModel.createProduct(req,res);
+        })
+
+        router.put("/products/:productId",(req,res) => {
+
+            this.productModel.updateProduct(req, res);
         })
 
 

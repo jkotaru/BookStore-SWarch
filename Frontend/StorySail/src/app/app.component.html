@@ -29,7 +29,7 @@
         <a *ngFor="let genre of genres" [routerLink]="['/products/category/', genre]" routerLinkActive="active">{{ genre }}</a>
       </div>
     </div>
-    <input type="text" class="search-bar" placeholder="Search...">
+    <button routerLink="/search" class="search-button">Search</button>
   </div>
 </nav>
 

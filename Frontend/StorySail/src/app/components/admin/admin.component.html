@@ -1,31 +1,71 @@
 <div>
-    <h2>Admin Dashboard</h2>
-  
-    <!-- Button to add new product -->
-    <button (click)="addProduct()">Add Product</button>
-  
-    <!-- Table to display products -->
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products">
-          <td>{{ product.title }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.quantity }}</td>
-          <td>
-            <!-- Buttons for CRUD operations -->
-            <button (click)="editProduct(product)">Edit</button>
-            <button (click)="deleteProduct(product)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <h2>Admin Dashboard</h2>
+
+  <button *ngIf="!showForm" (click)="addProduct()">Add Product</button>
+
+  <div *ngIf="showForm">
+    <h3>Add New Product</h3>
+    <form (ngSubmit)="saveProduct()" #productForm = "ngForm">
+      <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required [(ngModel)]="formData.title" #title="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="title">Description:</label>
+        <input type="text" id="description" name="description" required [(ngModel)]="formData.description" #description="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" required [(ngModel)]="formData.author" #author="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image Url:</label>
+        <input type="text" id="imageUrl" name="imageUrl" required [(ngModel)]="formData.imageUrl" #imageUrl="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="publisher">Publisher:</label>
+        <input type="text" id="publisher" name="publisher" required [(ngModel)]="formData.publisher" #publisher="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="publicationDate">Publication Date:</label>
+        <input type="text" id="publicationDate" name="publicationDate" required [(ngModel)]="formData.publicationDate" #publicationDate="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required [(ngModel)]="formData.genre" #genre="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required [(ngModel)]="formData.quantity" #quantity="ngModel">
+      </div>
+      <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required [(ngModel)]="formData.price" #price="ngModel">
+      </div>
+      <button type="submit" [disabled]="productForm.invalid" >{{ isEditing ? 'Update' : 'Save' }}</button>
+      <button type="button" (click)="cancel()">Cancel</button>
+    </form>
   </div>
-  
+
+  <table *ngIf="!showForm">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products; let i = index">
+        <td>{{ product.title }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+          <button (click)="editProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

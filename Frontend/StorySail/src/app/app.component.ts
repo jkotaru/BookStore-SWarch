@@ -50,4 +50,5 @@ export class AppComponent implements OnInit{
   onGenreChange(genre: string): void {
     this.router.navigate(['/products/category', genre]);
   }
+  
 }

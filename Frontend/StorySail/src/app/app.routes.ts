@@ -7,9 +7,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductCategoryComponent } from './components/product-category/product-category.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { SearchComponent } from './components/search/search.component';
 
 export const routes: Routes = [
     { path: '', component: ProductListComponent },
+    { path: 'search', component: SearchComponent},
     { path: 'products/:productId', component: ProductDetailComponent },
     { path: 'profile/:userId', component: ProfileComponent },
     { path: 'login', component: LoginComponent },

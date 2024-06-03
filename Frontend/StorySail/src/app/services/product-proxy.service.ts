@@ -31,5 +31,20 @@ export class ProductProxyService {
     return this.http.put<IProductModelAngular>(this.apiUrl + '/update', product);
   }
 
+  searchProducts(query: string): Observable<any> {
+    return this.http.get(`http://localhost:5000/search/products/${query}`);
+  }
+
+  deleteProduct(productId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${productId}`);
+  }
+
+  addProduct(product: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, product);
+  }
+
+  updateProduct(product: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${product.id}`, product);
+  }
 
 }

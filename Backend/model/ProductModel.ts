@@ -2,6 +2,7 @@ import Mongoose = require("mongoose");
 import { DataAccess } from './../DataAccess';
 import { IProductModel } from "../interface/IProductModel";
 import { products } from "./data";
+const uuid = require('uuid');
 let mongooseConnection = DataAccess.mongooseConnection;
 let mongooseObj = DataAccess.mongooseInstance;
 
@@ -65,20 +66,23 @@ class ProductModel {
       
       // Create a new product
       public async createProduct(req, res){
-        const product = new this.model({
-          picture: req.body.picture,
-          name: req.body.name,
-          price: req.body.price,
-          description: req.body.description,
-          quantity: req.body.quantity,
+        const productData = req.body;
+
+        const productId = uuid.v4();
+        const newProduct = new this.model({
+            productId: productId,
+            title: productData.title,
+            description: productData.description,
+            author: productData.author,
+            price: productData.price,
+            quantity: productData.quantity,
+            imageUrl: productData.imageUrl,
+            publisher: productData.publisher,
+            publicationDate: productData.publicationDate,
+            genre: productData.genre
         });
-      
-        try {
-          const newProduct = await product.save();
-          res.status(201).json(newProduct);
-        } catch (err) {
-          res.status(400).json({ message: err.message });
-        }
+        newProduct.save();
+        res.status(200).json({message: "User data added to database!"});
       };
       
       // Update a product
@@ -89,21 +93,15 @@ class ProductModel {
             return res.status(404).json({ message: 'Cannot find product' });
           }
       
-          if (req.body.picture != null) {
-            product.picture = req.body.picture;
-          }
-          if (req.body.name != null) {
-            product.name = req.body.name;
-          }
-          if (req.body.price != null) {
-            product.price = req.body.price;
-          }
-          if (req.body.description != null) {
-            product.description = req.body.description;
-          }
-          if (req.body.quantity != null) {
-            product.quantity = req.body.quantity;
-          }
+          product.title = req.body.title,
+          product.description = req.body.description,
+          product.author = req.body.author,
+          product.price = req.body.price,
+          product.quantity = req.body.quantity,
+          product.imageUrl = req.body.imageUrl,
+          product.publisher = req.body.publisher,
+          product.publicationDate = req.body.publicationDate,
+          product.genre = req.body.genre
       
           const updatedProduct = await product.save();
           res.json(updatedProduct);
@@ -115,7 +113,7 @@ class ProductModel {
       // Delete a product
       public async deleteProduct(req, res){
         try {
-          const product = await this.model.findById(req.params.id);
+          const product = await this.model.findOne({ productId: req.params.productId });
           if (product == null) {
             return res.status(404).json({ message: 'Cannot find product' });
           }
@@ -170,7 +168,20 @@ class ProductModel {
               response.status(200).json("Product Info has been updated!")  
           }         
       })
-  }
+    }
+
+    public async filterProductsByTitle(req,res) {
+      try
+      {
+        const query = req.query.query.toLowerCase();
+        console.log(query);
+        const filteredProducts = await this.model.find({ title: { $regex: query, $options: 'i' } });
+        res.status(200).json(filteredProducts);
+      }
+      catch (err) {
+        res.status(500).json({ message: err.message });
+      }
+    }
     
 }
 
